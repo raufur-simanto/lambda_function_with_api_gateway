@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            background-color: #222629;
+            color: #FFFFFF;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .signup-container {
+            background-color: #474b4f;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+        }
+        h1 {
+            color: #86C232;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #2d3134;
+            color: #FFFFFF;
+        }
+        input:focus {
+            outline: none;
+            border-color: #86C232;
+        }
+        button {
+            background-color: #86C232;
+            border: none;
+            padding: 10px 20px;
+            color: #222629;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #61892f;
+        }
+    </style>
+    <script>
+        function signUp() {
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            fetch("https://tjgviqkn45.execute-api.us-east-1.amazonaws.com/dev", {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, username, password })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Signup successful! Redirecting to login...");
+                    setTimeout(() => {
+                        window.location.href = "login.html"; // Redirect after 2 seconds
+                    }, 2000);
+                } else {
+                    alert("Signup failed. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred. Please try again.");
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="signup-container">
+        <h1>Sign Up</h1>
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        
+        <label for="username">User Name:</label>
+        <input type="text" id="username" placeholder="Enter your username" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        
+        <button type="button" onclick="signUp()">Sign Up</button>
+    </div>
+</body>
+</html>
